@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Teste NUINF JSF</title>
+	<link rel="stylesheet" href="../resources/css/primeicons.minified.css" />
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		<p:menubar styleClass="">
+
+			<p:menuitem value="Inicio" url="inicio.xhtml" icon="pi pi-home" />
+
+			<p:menuitem value="Listar Pessoas"
+				action="#{pessoaBean.preparaListar()}" icon="pi pi-search" />
+
+			<p:menuitem value="Cadastrar Pessoa"
+				action="#{pessoaBean.preparaCadastrar()}" icon="pi pi-save" />
+
+		</p:menubar>
+	</h:form>
+</h:body>
+</html>

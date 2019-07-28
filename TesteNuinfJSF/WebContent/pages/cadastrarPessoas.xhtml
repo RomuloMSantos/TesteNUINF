@@ -1,0 +1,170 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Teste NUINF JSF</title>
+	<link rel="stylesheet" href="../resources/css/primeicons.minified.css" />
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		<p:menubar styleClass="">
+
+			<p:menuitem value="Inicio" url="inicio.xhtml" icon="pi pi-home" />
+
+			<p:menuitem value="Listar Pessoas"
+				action="#{pessoaBean.preparaListar()}" icon="pi pi-search" />
+
+			<p:menuitem value="Cadastrar Pessoa"
+				action="#{pessoaBean.preparaCadastrar()}" icon="pi pi-save" />
+
+		</p:menubar>
+
+		<p:panel>
+
+			<f:facet name="header">
+	            Cadastro de Pessoa
+	        </f:facet>
+
+			<p:panelGrid style="float: left; width: 50%;">
+				<p:row>
+					<p:column>
+						<h:outputLabel value="Nome" />
+					</p:column>
+					<p:column>
+						<p:inputText value="#{pessoaBean.pessoaCadastro.nome}" label="Nome" style="width: 190px;" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputLabel value="CPF" />
+					</p:column>
+					<p:column>
+						<p:inputMask value="#{pessoaBean.pessoaCadastro.cpf}" label="CPF" style="width: 190px;" mask="999.999.999-99" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+
+			<p:panelGrid style="width: 50%;">
+				<p:row>
+					<p:column>
+						<h:outputLabel value="E-Mail" />
+					</p:column>
+					<p:column>
+						<p:inputText value="#{pessoaBean.pessoaCadastro.email}"
+							label="E-Mail" style="width: 250px;" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputLabel value="Data de Nascimento" />
+					</p:column>
+					<p:column>
+						<p:calendar id="dataNascimento" mask="99/99/9999" locale="pt" value="#{pessoaBean.pessoaCadastro.dataNascimento}" showOn="button" navigator="true" pattern="dd/MM/yyyy"/>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<hr></hr>
+
+			<p:panel id="panelTelefone">
+				<f:facet name="header">
+		            Cadastro de Telefone
+		        </f:facet>
+				<p:panelGrid style="float: rigth; padding-bottom: 10px;">
+					<p:row>
+						<p:column>
+							<h:outputLabel value="DDD" />
+						</p:column>
+						<p:column>
+							<p:inputMask value="#{pessoaBean.novoTelefone.ddd}" label="DDD"
+								style="width: 190px;" mask="99"/>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputLabel value="Número" />
+						</p:column>
+						<p:column>
+							<p:inputMask value="#{pessoaBean.novoTelefone.numero}"
+								label="Número" style="width: 190px;" mask="99999-9999"/>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				
+				<p:commandButton update="tabelaTelefones panelTelefone"
+								action="#{pessoaBean.adicionarTelefonePessoa}" title="Adicionar"
+								value="Adicionar" icon="pi pi-check"/>
+			</p:panel>
+			<p:dataTable var="telefone"
+				value="#{pessoaBean.pessoaCadastro.telefones}" id="tabelaTelefones"
+				style="padding-top: 15px;" emptyMessage="Nenhum registro encontrado.">
+				<f:facet name="header">
+	            Lista de Telefones
+	        </f:facet>
+
+				<p:column headerText="Id">
+					<h:outputText value="#{telefone.id}" />
+				</p:column>
+
+				<p:column headerText="DDD">
+					<h:outputText value="#{telefone.ddd}" />
+				</p:column>
+
+				<p:column headerText="Número">
+					<h:outputText value="#{telefone.numero}" />
+				</p:column>
+
+				<p:column headerText="Ações">
+					<p:commandButton update="tabelaTelefones"
+						action="#{pessoaBean.deletarTelefonePessoa}" icon="pi pi-times"
+						title="Deletar" value="Deletar">
+						<f:setPropertyActionListener value="#{telefone}"
+							target="#{pessoaBean.telefonePessoaSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:commandButton action="#{pessoaBean.salvarPessoa}"
+				value="Cadastrar" rendered="#{pessoaBean.pessoaCadastro.id == 0}" icon="pi pi-save"/>
+			<p:commandButton action="#{pessoaBean.salvarPessoa}"
+				rendered="#{pessoaBean.pessoaCadastro.id > 0}" value="Alterar" icon="pi pi-save"/>
+
+		</p:panel>
+	</h:form>
+</h:body>
+<script type="text/javascript">
+	PrimeFaces.locales['pt'] = {
+        closeText: 'Fechar',
+        prevText: 'Anterior',
+        nextText: 'Próximo',
+        currentText: 'Começo',
+        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+        dayNamesMin: ['D','S','T','Q','Q','S','S'],
+        weekHeader: 'Semana',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        timeOnlyTitle: 'Só Horas',
+        timeText: 'Tempo',
+        hourText: 'Hora',
+        minuteText: 'Minuto',
+        secondText: 'Segundo',
+        currentText: 'Data Atual',
+        ampm: false,
+        month: 'Mês',
+        week: 'Semana',
+        day: 'Dia',
+        allDayText : 'Todo Dia'
+    };
+</script>
+</html>
