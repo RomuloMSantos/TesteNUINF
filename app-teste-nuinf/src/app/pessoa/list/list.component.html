@@ -1,0 +1,54 @@
+﻿   
+            <div class="content-wrapper">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-head-line">Listagem de Pessoas </h1>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="col-md-8">
+                        <form>
+                            <div class="col-md-4 form-group">
+                                <label for="inputNomePesquisar">Nome</label>
+                                <input type="text" class="form-control" id="inputNomePesquisar" placeholder="Nome" [(ngModel)]="filtro.nome" name="nome"/>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="inputCpfPesquisar">CPF</label>
+                                <input type="text" class="form-control" id="inputCpfPesquisar" placeholder="CPF" [(ngModel)]="filtro.cpf" name="cpf" [dropSpecialCharacters]="false" mask="000.000.000-00"/>
+                            </div>
+                            <div class="col-md-4" style="padding-top: 35px;">
+                                <button type="submit" class="btn btn-default" (click)="pesquisar()">Pesquisar</button>
+                                <a routerLink="/cadastra-pessoa" class="btn btn-default" style="margin-left: 5px;"> Cadastrar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="table-responsive" style="padding-top: 15px;">
+                     <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th style="width: 150px;">Nome</th>
+                                <th>CPF</th>
+                                <th>Idade</th>
+                                <th style="width: 90px;">Quantidade de Telefones</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let pessoa of pessoas;">
+                                <td>{{ pessoa.id }}</td>
+                                <td>{{ pessoa.nome }}</td>
+                                <td>{{ pessoa.cpf }}</td>
+                                <td>{{ calculaIdade(pessoa.dataNascimento) }}</td>
+                                <td>{{ pessoa.telefones.length }}</td>
+                                <td> <button (click)="editar(pessoa.id)"  class="btn btn-xs btn-info fa fa-edit">Editar</button>  <button (click)="deletar(pessoa)"  class="btn btn-xs btn-danger fa fa-pencil">Deletar</button> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
